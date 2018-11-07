@@ -9,68 +9,65 @@ def clasificacion_nueva(request):
     if request.method == "POST":
         formulario = AutorForm(request.POST)
         if formulario.is_valid():
-            cliente = Autor.objects.create(
+            autor = Autor.objects.create(
             nombre = formulario.cleaned_data['nombre'],
             apellido = formulario.cleaned_data['apellido'],
-            direccion = formulario.cleaned_data['direccion'],
-            email = formulario.cleaned_data['email'],
-            telefono = formulario.cleaned_data['telefono'])
-            for producto_id in request.POST.getlist('productos'):
-                factura = Factura(producto_id=producto_id, cliente_id = cliente.id)
-                factura.save()
-            messages.add_message(request, messages.SUCCESS, 'Factura Creada con Exito.')
+            genero = formulario.cleaned_data['genero'],
+            for libro_id in request.POST.getlist('libros'):
+                clasificacion = Clasificacion(libro_id=libro_id, autor_id = autor.id)
+                clasificacion.save()
+            messages.add_message(request, messages.SUCCESS, 'Clasificacion creada satisfactoriamente.')
     else:
-        formulario = ClienteForm()
-    return render(request, 'facturas/factura_nueva.html', {'formulario': formulario})
+        formulario = AutorForm()
+    return render(request, 'clasificaciones/clasificacion_nueva.html', {'formulario': formulario})
 
 @login_required
-def factura_lista(request):
-    #clientes = Factura.objects.filter(cliente__nit=12345678)
-    clientes = Cliente.objects.all()
-    return render(request, 'facturas/factura_lista.html', {'clientes': clientes})
+def clasificacion_lista(request):
+    autores = Autor.objects.all()
+    return render(request, 'clasificaciones/clasificacion_lista.html', {'autores': autores})
 
 @login_required
-def factura_remove(request, pk):
-    cliente = get_object_or_404(Cliente, pk=pk)
-    cliente.delete()
-    return redirect('factura_lista')
+def clasificacion_remove(request, pk):
+    autor = get_object_or_404(Autor, pk=pk)
+    autor.delete()
+    return redirect('clasificacion_lista')
 
 @login_required
-def producto_lista(request):
-    #clientes = Factura.objects.filter(cliente__nit=12345678)
-    productos = Producto.objects.all()
-    return render(request, 'productos/producto_lista.html', {'productos': productos})
+def libro_lista(request):
+    libros = Libro.objects.all()
+    return render(request, 'libros/libro_lista.html', {'libros': libros})
 
 @login_required
 def producto_nuevo(request):
     if request.method == "POST":
-        formulario = ProductoForm(request.POST)
+        formulario = LibroForm(request.POST)
         if formulario.is_valid():
-            producto = Producto.objects.create(
+            libro = Libro.objects.create(
             nombre = formulario.cleaned_data['nombre'],
+            editorial = formulario.cleaned_data['editorial'],
             precio = formulario.cleaned_data['precio'],
-            stock = formulario.cleaned_data['stock'])
-            return redirect('producto_lista')
-            messages.add_message(request, messages.SUCCESS, 'Factura Creada con Exito.')
+            unidades = formulario.cleaned_data['unidades'])
+            return redirect('libro_lista')
+            messages.add_message(request, messages.SUCCESS, 'Clasificacion creada satisfactoriamente.')
     else:
-        formulario = ProductoForm()
-    return render(request, 'productos/producto_crear.html', {'formulario': formulario})
+        formulario = LibroForm()
+    return render(request, 'libros/libro_crear.html', {'formulario': formulario})
 
 @login_required
-def producto_editar(request, pk):
-    producto = get_object_or_404(Producto, pk=pk)
+def libro_editar(request, pk):
+    libro = get_object_or_404(Libro, pk=pk)
     if request.method == 'POST':
-        formulario = ProductoForm(request.POST, request.FILES, instance=producto)
+        formulario = LibroForm(request.POST, request.FILES, instance=libro)
         if formulario.is_valid():
-            producto = formulario.save()
-            producto.save()
-            return redirect('producto_lista')
+            libro = formulario.save()
+            libro.save()
+            return redirect('libro_lista')
     else:
-        formulario = ProductoForm(instance=producto)
-    return render(request, 'productos/producto_editar.html', {'formulario': formulario})
+        formulario = LibroForm(instance=libro)
+    return render(request, 'libros/libro_editar.html', {'formulario': formulario})
 
 @login_required
-def producto_remove(request, pk):
-    producto = get_object_or_404(Producto, pk=pk)
-    producto.delete()
-return redirect('producto_lista')
+def libro_remove(request, pk):
+    libro = get_object_or_404(Libro, pk=pk)
+    libro.delete()
+return redirect('libro_lista')
