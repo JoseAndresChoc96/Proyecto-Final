@@ -22,8 +22,8 @@ class Autor (models.Model):
         return self.nit
 
 class Clasificacion(models.Model):
-    libro = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    autor = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    libro = models.ForeignKey(Libro, on_delete=models.CASCADE)
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
     extra = 1
 
 class ClasificacionInLine(admin.TabularInline):
@@ -35,4 +35,4 @@ class AutorAdmin(admin.ModelAdmin):
     inlines = (ClasificacionInLine,)
 
 class LibroAdmin (admin.ModelAdmin):
-inlines = (ClasificacionInLine,)
+    inlines = (ClasificacionInLine,)
