@@ -14,7 +14,6 @@ class Libro (models.Model):
 class Autor (models.Model):
     nombre  =   models.CharField(max_length=50)
     apellido =  models.CharField(max_length=50)
-    seudonimo =  models.CharField(max_length=50)
     genero =  models.CharField(max_length=50)
     libros = models.ManyToManyField(Libro, through='Clasificacion')
 
