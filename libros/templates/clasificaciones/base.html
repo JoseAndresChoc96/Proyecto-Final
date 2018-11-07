@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <title>Proyecto Libros M2M</title>
+        <link rel="stylesheet" href="https://bootswatch.com/4/superhero/bootstrap.min.css">
+    </head>
+    <body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url 'clasificacion_lista' %}">Inicio</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      {% if user.is_authenticated %}
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'clasificacion_lista' %}">Autores <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'libro_lista' %}">Libros <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'clasificacion_nueva' %}">Clasificacion <span class="sr-only">(current)</span></a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+    {% if user.is_authenticated %}
+        <p style="color:#fff"; class="top-menu">Bienvenido - {{ user.username }} <small>(<a href="{% url 'logout' %}">Cerrar Sesion <i class="fa fa-close"></i></a>)</small></p>
+    {% else %}
+        <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+    {% endif %}
+</nav>
+
+<div class="card">
+  <div class="card-header">
+    Libros M2M
+  </div>
+
+  <div class="card-body">
+    <div class="form-group">
+     {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% block content %}
+      {% endblock %}
+
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+{% extends 'clasificaciones/base.html' %}
+
+{% block content %}
+    <h1>Listado de Libros</h1>
+    <a href="{% url 'libro_nuevo' %}" type="button" class="btn btn-outline-warning" role="button" aria-pressed="true">Agregar Nuevo Libro</a>
+    <br>
+    <br>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Editorial</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Unidades</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for libro in libros %}
+        <tr>
+          <td>{{ libro.nombre }}</td>
+          <td>{{ libro.editorial }}</td>
+          <td>{{ libro.precio }}</td>
+          <td>{{ libro.unidades }}</td>
+          <td>
+            <div class="" role="" aria-label="Basic example">
+              <a href="{% url 'libro_editar' pk=libro.pk %}" type="button" class="btn btn-outline-success" role="button" aria-pressed="true">Editar</a>
+              <a href="{% url 'libro_remove' pk=libro.pk %}" type="button" class="btn btn-outline-danger" role="button" aria-pressed="true">Eliminar</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

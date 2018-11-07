@@ -1,0 +1,30 @@
+{% extends 'clasificaciones/base.html' %}
+
+{% block content %}
+    <h1>Listado de Autores</h1>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Genero</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for autor in autores %}
+        <tr>
+          <th scope="row">{{ autor.nombre }}</th>
+          <td>{{ autor.nombre }} {{ autor.apellido }}</td>
+          <td>{{ autor.genero }}</td>
+          <td>
+            <div class="" role="" aria-label="Basic example">
+              <a href="{% url 'clasificacion_detalle' pk=autor.pk %}" type="button" class="btn btn-outline-info" role="button" aria-pressed="true">Clasificaciones</a>
+              <a href="{% url 'clasificacion_editar' pk=autor.pk %}"s type="button" class="btn btn-outline-success" role="button" aria-pressed="true">Editar</a>
+              <a href="{% url 'clasificacion_remove' pk=autor.pk %}" type="button" class="btn btn-outline-danger" role="button" aria-pressed="true">Eliminar</a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

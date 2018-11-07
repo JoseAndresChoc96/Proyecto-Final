@@ -18,7 +18,7 @@ class Autor (models.Model):
     libros = models.ManyToManyField(Libro, through='Clasificacion')
 
     def __str__(self):
-        return self.nit
+        return self.nombre
 
 class Clasificacion(models.Model):
     libro = models.ForeignKey(Libro, on_delete=models.CASCADE)
@@ -27,7 +27,6 @@ class Clasificacion(models.Model):
 
 class ClasificacionInLine(admin.TabularInline):
     model = Clasificacion
-#muestra un campo extra al momento de insertar, como indicación que se pueden ingresar N actores.
     extra = 1
 
 class AutorAdmin(admin.ModelAdmin):

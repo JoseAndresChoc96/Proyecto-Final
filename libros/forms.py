@@ -1,5 +1,5 @@
 from django import forms
-from .models import Libro, Autor
+from .models import Libro, Autor, Clasificacion
 
 class AutorForm(forms.ModelForm):
     class Meta:
@@ -10,12 +10,12 @@ def __init__ (self, *args, **kwargs):
         super(ClienteForm, self).__init__(*args, **kwargs)
         self.fields["libros"].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["libros"].help_text = "Ingrese Libros"
-        self.fields["libros"].queryset = Producto.objects.all()
+        self.fields["libros"].queryset = Libro.objects.all()
 
 class ClasificacionForm(forms.ModelForm):
     class Meta:
-        model = Autores
-        fields = ('nombre', 'apellido', 'genero')
+        model = Clasificacion
+        fields = ('libro', 'autor')
 
 class LibroForm(forms.ModelForm):
     class Meta:
